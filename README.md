@@ -2,4 +2,4 @@ wxPython Frontend for [Highlight](http://www.andre-simon.de/doku/highlight/en/hi
 
 ![](Doc/image/screen.jpg)
 
-Please visit [blog](https://innomatic.blogspot.com) for more information.
+Please visit [blog](https://innomatic.blogspot.ca) for more information.
