@@ -310,6 +310,9 @@ class MyFrame(wx.Frame):
         if self.chkInLCss.GetValue():
             cmd = cmd + ' --inline-css'
     
+        # tabs to space
+        cmd = cmd + ' --replace-tabs=4'
+
         # run highlight
         p = run(cmd, stdout=PIPE, stderr=PIPE, input=sel, encoding='ascii')
 
