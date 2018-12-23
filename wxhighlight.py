@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ################################################################################
 #
 # \file
@@ -15,9 +15,6 @@ import pickle
 import wx
 import wx.html2 as html2
 from subprocess import run, PIPE
-
-## choice box size limit
-CTRL_SIZE=(140,24)
 
 ## Get the real screen size after SetProcessDPIAware, which is used to compute
 #  the screen ratio. This function runs in separate process not to affect the UI.
@@ -109,11 +106,6 @@ class MyFrame(wx.Frame):
         self.sttFntSiz = wx.StaticText(self.pnlCtrl, -1, 'Size')
         self.choFntSiz = wx.Choice(self.pnlCtrl, -1)
 
-        # limit the size of the choice boxes
-        self.choSyntax.SetMaxSize(CTRL_SIZE)
-        self.choOutput.SetMaxSize(CTRL_SIZE)
-        self.choThemes.SetMaxSize(CTRL_SIZE)
-
         # option checkboxes
         self.sttOption = wx.StaticText(self.pnlCtrl, -1, 'Option')
         self.chkLineNo = wx.CheckBox(self.pnlCtrl, -1, 'Line Numbering')
@@ -139,7 +131,7 @@ class MyFrame(wx.Frame):
         # set droptarget
         dt = MyFileDropTarget(self.textSrc, self.txtFlname)
         self.textSrc.SetDropTarget(dt)
-    
+
         # font enumerator
         fe = wx.FontEnumerator()
         # we may want only fixed-width ones
@@ -158,7 +150,7 @@ class MyFrame(wx.Frame):
         if 'nt' in os.name:
             self.hlight = 'c:\\Program Files\\Highlight\\highlight.exe'
         else:
-            self.hlight = 'highlight'
+            self.hlight = '/usr/bin/highlight'
 
         # initialize params
         self.LoadParams()
@@ -309,12 +301,13 @@ class MyFrame(wx.Frame):
         # inline CSS
         if self.chkInLCss.GetValue():
             cmd = cmd + ' --inline-css'
-    
+
         # tabs to space
         cmd = cmd + ' --replace-tabs=4'
 
         # run highlight
-        p = run(cmd, stdout=PIPE, stderr=PIPE, input=sel, encoding='ascii')
+        p = run(cmd, stdout=PIPE, stderr=PIPE, input=sel, encoding='ascii',
+                shell=True)
 
         # error occurred
         if p.stderr != '':
